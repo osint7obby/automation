@@ -11,24 +11,7 @@ import time
 import datetime
 
 
-#nie dziala - text wrapping rozwala program
 
-# Text wrapping function
-def wrap_text(text, draw, font, max_width):
-    lines = []
-    words = text.split()
-    line = ""
-    
-    for word in words:
-        width, _ = draw.textsize(line + word, font=font)
-        if width > max_width:
-            lines.append(line.strip())
-            line = ""
-        
-        line += word + " "
-    
-    lines.append(line.strip())
-    return lines
 
 def scroll_and_screenshot(search_query):
     try:
@@ -58,26 +41,7 @@ def scroll_and_screenshot(search_query):
 
         time.sleep(5)
 
-        img = Image.open(screenshot_name)
-        d = ImageDraw.Draw(img)
-        font = ImageFont.load_default()
         
-        url = driver.current_url
-        current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        text = f"URL: {url}\nDate-Time: {current_time}"
-        
-        max_width = img.width // 4
-        lines = wrap_text(text, d, font, max_width)
-        
-        y = 100  # Starting y-coordinate
-        x = 0    # Starting x-coordinate
-        
-        for line in lines:
-        d.text((x, y), line, font=font, fill=(255, 0, 0))
-        text_width, text_height = d.textsize(line, font=font)  # Corrected this line
-        y += text_height
-        
-        img.save(screenshot_name)
 
         driver.quit()
 
@@ -121,6 +85,5 @@ def on_enter_key(event):
 root.bind('<Return>', on_enter_key)
 
 root.mainloop()
-
 
 
